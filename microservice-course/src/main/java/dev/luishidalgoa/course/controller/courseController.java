@@ -1,6 +1,6 @@
 package dev.luishidalgoa.course.controller;
 
-import dev.luishidalgoa.course.entity.Course;
+import dev.luishidalgoa.course.model.entity.Course;
 import dev.luishidalgoa.course.service.ICourseService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -29,5 +29,10 @@ public class courseController {
     @GetMapping("/search/{id}")
     public ResponseEntity<?> findById(@PathVariable Long id) {
         return ResponseEntity.ok(courseService.findById(id));
+    }
+
+    @GetMapping("/search-student/{idCourse}")
+    public ResponseEntity<?> findStudentsByIdCourse(@PathVariable Long idCourse) {
+        return ResponseEntity.ok(courseService.findStudentsByIdCourse(idCourse));
     }
 }

@@ -1,4 +1,4 @@
-package dev.luishidalgoa.course.entity;
+package dev.luishidalgoa.course.model.entity;
 
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
