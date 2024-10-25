@@ -11,7 +11,7 @@ spring:
     password: 1234
   jpa:
     hibernate:
-      del-auto: create
+      ddl-auto: validate
     database: mysql
     database-platform: org.hibernate.dialect.PostgreSQLDialect
   config:

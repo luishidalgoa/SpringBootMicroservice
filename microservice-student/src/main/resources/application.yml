@@ -11,9 +11,9 @@ spring:
     password: 1234
   jpa:
     hibernate:
-      del-auto: create
+      ddl-auto: validate
     database: mysql
-    database-platform: org.hibernate.dialect.MySQL8Dialect
+    database-platform: org.hibernate.dialect.MySQLDialect
   config:
     import: optional:configserver:http://localhost:8888
 
