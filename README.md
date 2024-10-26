@@ -5,10 +5,17 @@ services:
     image: postgres:latest
     environment:
       POSTGRES_DB: db_course
-      POSTGRES_PASSWORD: 1234
       POSTGRES_USER: root
+      POSTGRES_PASSWORD: 1234
     ports:
       - "5432:5432"
+    healthcheck:
+      test: [ "CMD", "pg_isready", "-U", "root" ]
+      interval: 10s
+      timeout: 5s
+      retries: 3
+      start_period: 10s
+    container_name: postgres-db
     networks:
       - microservices-network
 
@@ -17,81 +24,98 @@ services:
     environment:
       MYSQL_DATABASE: db_student
       MYSQL_ROOT_PASSWORD: 1234
+    container_name: mysql-db
     ports:
       - "3306:3306"
+    healthcheck:
+      test: [ "CMD", "mysqladmin", "ping", "-h", "localhost" ]
+      interval: 10s
+      timeout: 5s
+      retries: 3
+      start_period: 10s
     networks:
       - microservices-network
 
   eureka:
-    image: luishidalgoa/springbootmicroservicios-eureka:v1
+    image: luishidalgoa/springbootmicroservicios-eureka:v2
+    container_name: msvc-eureka
     environment:
-      EUREKA_URL: http://springbootmicroservicios-eureka-1:8761  # Cambia a usar el nombre de servicio
-      EUREKA_HOSTNAME: springbootmicroservicios-eureka-1
+      EUREKA_HOSTNAME: msvc-eureka
     ports:
       - "8761:8761"
     networks:
       - microservices-network
 
-  student-service:
-    build:
-      context: ./microservice-student
-      dockerfile: Dockerfile
+  student:
+    image: luishidalgoa/springbootmicroservicios-student:v2
+    container_name: msvc-student
     environment:
-      DB_MYSQL_HOST: springbootmicroservicios-mysql-1
-      DB_MYSQL_PORT: 3306
-      DB_MYSQL_NAME: db_student
-      DB_MYSQL_USERNAME: root
-      DB_MYSQL_PASSWORD: 1234
-      DB_MYSQL_DDL_AUTO: create-drop
-      EUREKA_URL: http://springbootmicroservicios-eureka-1:8761
-      EUREKA_HOSTNAME: springbootmicroservicios-eureka-1
+      MYSQL_HOST: mysql-db
+      MYSQL_USER: root
+      MYSQL_PASSWORD: 1234
+      EUREKA_HOST_NAME: msvc-eureka
     ports:
       - "8090:8090"
     depends_on:
-      - mysql-db
-      - eureka
+      mysql-db:
+        condition: service_healthy
+      eureka:
+        condition: service_started
     networks:
       - microservices-network
 
-  course-service:
-    build:
-      context: ./microservice-course
-      dockerfile: Dockerfile
+  course:
+    image: luishidalgoa/springbootmicroservicios-course-service:v2
+    container_name: msvc-course
     environment:
-      DB_POSTGRES_HOST: springbootmicroservicios-postgres-1
-      DB_POSTGRES_PORT: 5432
-      DB_POSTGRES_NAME: db_course
-      DB_POSTGRES_USERNAME: root
-      DB_POSTGRES_PASSWORD: 1234
-      DB_POSTGRES_DDL_AUTO: create-drop
-      EUREKA_URL: http://springbootmicroservicios-eureka-1:8761
-      EUREKA_HOSTNAME: springbootmicroservicios-eureka-1
+      POSTGRES_HOST: postgres-db
+      POSTGRES_USER: root
+      POSTGRES_PASSWORD: 1234
+      EUREKA_HOST_NAME: msvc-eureka
     ports:
       - "9090:9090"
     depends_on:
-      - postgres-db
-      - eureka
+      postgres-db:
+        condition: service_healthy
+      eureka:
+        condition: service_started
     networks:
       - microservices-network
 
   gateway:
-    build:
-      context: ./microservice-gateway
-      dockerfile: Dockerfile
+    image: luishidalgoa/springbootmicroservicios-gateway:v2
+    container_name: msvc-gateway
     environment:
-      COURSE_SERVICE_URL: http://springbootmicroservicios-course-service-1:9090
-      STUDENT_SERVICE_URL: http://springbootmicroservicios-student-service-1:8090
+      STUDENT_HOST: msvc-student
+      COURSE_HOST: msvc-course
+      EUREKA_HOST_NAME: msvc-eureka
     ports:
       - "8080:8080"
     depends_on:
-      - course-service
-      - student-service
+      - student
+      - course
       - eureka
     networks:
       - microservices-network
 
 networks:
   microservices-network:
-    driver: bridge  # Utiliza el controlador bridge (por defecto)
+    driver: bridge
+
+
+  #VARIABLES GLOBALES
+  #MYSQL_HOST
+  #MYSQL_USER
+  #MYSQL_PASSWORD
+  
+  #POSTGRES_HOST
+  #POSTGRES_USER
+  #POSTGRES_PASSWORD
+  
+  #CONFIG_SERVER
+  #EUREKA_HOST_NAME
+  
+  #STUDENT_HOST
+  #COURSE_HOST
 
 ```
