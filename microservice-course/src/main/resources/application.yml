@@ -3,23 +3,23 @@ server:
 spring:
   application:
     name: msvc-course
+  config:
+    import: optional:configserver:http://${CONFIG_SERVER:localhost}:8888
   datasource:
     driver-class-name: org.postgresql.Driver
-    url: jdbc:postgresql://localhost:5432/db_course
-    username: root
-    password: 1234
+    url: jdbc:postgresql://${POSTGRES_HOST:localhost}:5432/db_course
+    username: ${POSTGRES_USER:root}
+    password: ${POSTGRES_PASSWORD:1234}
   jpa:
     hibernate:
-      ddl-auto: validate
+      ddl-auto: create-drop
     database: mysql
     database-platform: org.hibernate.dialect.PostgreSQLDialect
-  config:
-    import: optional:configserver:http://localhost:8888
 
 
 eureka:
   instance:
-    hostname: localhost
+    hostname: ${EUREKA_HOST_NAME:localhost}
   client:
     service-url:
-      defaultZone: http://localhost:8761/eureka
+      defaultZone: http://${EUREKA_HOST_NAME:localhost}:8761/eureka
