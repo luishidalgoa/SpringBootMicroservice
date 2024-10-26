@@ -1,0 +1,33 @@
+services:
+    postgres-db:
+        image: postgres:latest
+        environment:
+          POSTGRES_USER: postgres
+          POSTGRES_PASSWORD: 1234
+          POSTGRES_DB: db_course
+        ports:
+          - 5432:5432
+        container_name: postgres-db
+        networks:
+          - MicroserviceNetwork
+        healthcheck:
+          test: pg_isready -U postgres -d db_course -h 127.0.0.1 -p 5432
+
+
+
+
+
+
+  MYSQL_HOST
+  MYSQL_USER
+  MYSQL_PASSWORD
+  
+  POSTGRES_HOST
+  POSTGRES_USER
+  POSTGRES_PASSWORD
+  
+  CONFIG_SERVER
+  EUREKA_HOST_NAME
+  
+  STUDENT_HOST
+  COURSE_HOST
