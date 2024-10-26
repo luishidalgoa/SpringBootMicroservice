@@ -1,4 +1,5 @@
 dockerfile:
+```yml
 version: '3.8'  # Especifica la versión de Docker Compose
 
 services:
@@ -102,3 +103,5 @@ volumes:
 networks:
   microservices-network:
     driver: bridge  # Utiliza el controlador bridge (por defecto)
+
+```
