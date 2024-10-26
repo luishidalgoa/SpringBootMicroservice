@@ -1,7 +1,5 @@
 dockerfile:
 ```yml
-version: '3.8'  # Especifica la versión de Docker Compose
-
 services:
   postgres-db:
     image: postgres:latest
@@ -11,8 +9,6 @@ services:
       POSTGRES_USER: root
     ports:
       - "5432:5432"
-    volumes:
-      - postgres_data:/var/lib/postgresql/data
     networks:
       - microservices-network
 
@@ -23,8 +19,6 @@ services:
       MYSQL_ROOT_PASSWORD: 1234
     ports:
       - "3306:3306"
-    volumes:
-      - mysql_data:/var/lib/mysql
     networks:
       - microservices-network
 
@@ -95,10 +89,6 @@ services:
       - eureka
     networks:
       - microservices-network
-
-volumes:
-  postgres_data:
-  mysql_data:
 
 networks:
   microservices-network:
