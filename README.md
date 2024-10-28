@@ -26,7 +26,7 @@ Se ha implementado la **documentación a través de Swagger** para cada microser
 - **Docker**: Deberás tener Docker o Docker Hub instalado en tu sistema:
     - [**Guía de instalación de Docker**](https://docs.docker.com/get-docker/)
 - **Docker Compose**: También es necesario instalar Docker Compose:
-    - [**Guía de instalación de Docker Compose**](https://docs.docker.com/compose/install/)
+    - [**Guía de instalación de Docker Compose**](https://docs.docker.com/compose/install/standalone/)
 
 ### **Ejecutar el Script:**
 Para levantar la infraestructura de microservicios con Docker Compose, ejecuta el siguiente comando en la terminal:
