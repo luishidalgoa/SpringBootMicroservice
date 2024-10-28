@@ -35,7 +35,7 @@ services:
       - microservices-network
 
   eureka:
-    image: luishidalgoa/springbootmicroservicios-eureka:v2
+    image: luishidalgoa/springbootmicroservicios-eureka:v3
     container_name: msvc-eureka
     environment:
       EUREKA_HOSTNAME: msvc-eureka
@@ -45,7 +45,7 @@ services:
       - microservices-network
 
   student:
-    image: luishidalgoa/springbootmicroservicios-student:v2
+    image: luishidalgoa/springbootmicroservicios-student:v3
     container_name: msvc-student
     environment:
       MYSQL_HOST: mysql-db
@@ -63,7 +63,7 @@ services:
       - microservices-network
 
   course:
-    image: luishidalgoa/springbootmicroservicios-course-service:v2
+    image: luishidalgoa/springbootmicroservicios-course-service:v3
     container_name: msvc-course
     environment:
       POSTGRES_HOST: postgres-db
@@ -81,7 +81,7 @@ services:
       - microservices-network
 
   gateway:
-    image: luishidalgoa/springbootmicroservicios-gateway:v2
+    image: luishidalgoa/springbootmicroservicios-gateway:v3
     container_name: msvc-gateway
     environment:
       STUDENT_HOST: msvc-student

@@ -1,4 +1,35 @@
-dockerfile:
+# Proyecto de Microservicios en Spring
+
+## **Introducción:**
+La idea principal de este proyecto es aprender a crear una aplicación con arquitectura orientada a **microservicios** en lugar de un monolito. Adicionalmente, toda la aplicación está **dockerizada** para facilitar su despliegue y administración.
+
+### **Documentación implementada**
+Se ha implementado la **documentación a través de Swagger** para cada microservicio. Sin embargo, **no ha sido posible integrarla en el Gateway** debido a una incompatibilidad entre **Spring Gateway** y **Spring Web**. ¡Cualquier recomendación para implementar Swagger en el microservicio Gateway será bienvenida!
+
+## **Documentación de la API:**
+
+1. **Documentación en Postman**  
+   Puedes acceder a la documentación pública de la API en Postman:
+    - [**Postman Documentation Link**](https://galactic-crescent-156854.postman.co/workspace/Team-Workspace~6e7e21b0-4367-49af-8246-fc3174491d32/collection/31150730-7669aff2-2597-4fae-970b-1375dcc5d398?action=share&creator=31150730)
+
+2. **Documentación de Swagger**  
+   La documentación Swagger para cada microservicio está disponible en los siguientes enlaces locales:
+    - **Microservicio Course**: [Swagger Course](http://localhost:9090/swagger-ui/index.html)
+    - **Microservicio Student**: [Swagger Student](http://localhost:8090/swagger-ui/index.html)
+
+## **Script Docker-compose:**
+### **Instalación:**
+- **Docker**: Deberás tener Docker o Docker Hub instalado en tu sistema:
+    - [**Guía de instalación de Docker**](https://docs.docker.com/get-docker/)
+- **Docker Compose**: También es necesario instalar Docker Compose:
+    - [**Guía de instalación de Docker Compose**](https://docs.docker.com/compose/install/)
+
+### **Ejecutar el Script:**
+Para levantar la infraestructura de microservicios con Docker Compose, ejecuta el siguiente comando en la terminal:
+### Script run:
+```bash
+docker compose up -d
+```
 ```yml
 services:
   postgres-db:
@@ -37,7 +68,7 @@ services:
       - microservices-network
 
   eureka:
-    image: luishidalgoa/springbootmicroservicios-eureka:v2
+    image: luishidalgoa/springbootmicroservicios-eureka:v3
     container_name: msvc-eureka
     environment:
       EUREKA_HOSTNAME: msvc-eureka
@@ -47,7 +78,7 @@ services:
       - microservices-network
 
   student:
-    image: luishidalgoa/springbootmicroservicios-student:v2
+    image: luishidalgoa/springbootmicroservicios-student:v3
     container_name: msvc-student
     environment:
       MYSQL_HOST: mysql-db
@@ -65,7 +96,7 @@ services:
       - microservices-network
 
   course:
-    image: luishidalgoa/springbootmicroservicios-course-service:v2
+    image: luishidalgoa/springbootmicroservicios-course-service:v3
     container_name: msvc-course
     environment:
       POSTGRES_HOST: postgres-db
@@ -83,7 +114,7 @@ services:
       - microservices-network
 
   gateway:
-    image: luishidalgoa/springbootmicroservicios-gateway:v2
+    image: luishidalgoa/springbootmicroservicios-gateway:v3
     container_name: msvc-gateway
     environment:
       STUDENT_HOST: msvc-student
@@ -107,15 +138,16 @@ networks:
   #MYSQL_HOST
   #MYSQL_USER
   #MYSQL_PASSWORD
-  
+
   #POSTGRES_HOST
   #POSTGRES_USER
   #POSTGRES_PASSWORD
-  
+
   #CONFIG_SERVER
   #EUREKA_HOST_NAME
-  
+
   #STUDENT_HOST
   #COURSE_HOST
+
 
 ```
