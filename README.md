@@ -14,7 +14,7 @@ Se ha implementado la **documentación a través de Swagger** para cada microser
 
 1. **Documentación en Postman**  
    Puedes acceder a la documentación pública de la API en Postman:
-    - [**Postman Documentation Link**](https://galactic-crescent-156854.postman.co/workspace/Team-Workspace~6e7e21b0-4367-49af-8246-fc3174491d32/collection/31150730-7669aff2-2597-4fae-970b-1375dcc5d398?action=share&creator=31150730)
+    - [**Postman Documentation Link**]([https://galactic-crescent-156854.postman.co/workspace/Team-Workspace~6e7e21b0-4367-49af-8246-fc3174491d32/collection/31150730-7669aff2-2597-4fae-970b-1375dcc5d398?action=share&creator=31150730](https://galactic-crescent-156854.postman.co/workspace/6e7e21b0-4367-49af-8246-fc3174491d32/documentation/31150730-7669aff2-2597-4fae-970b-1375dcc5d398))
 
 2. **Documentación de Swagger**  
    La documentación Swagger para cada microservicio está disponible en los siguientes enlaces locales:
