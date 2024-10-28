@@ -1,10 +1,14 @@
 # Proyecto de Microservicios en Spring
-
+![Microservicios imagen](https://www.arrobasolutions.com/wp-content/uploads/2021/10/Arquitectura-de-microservicios-que-es-y-cuales-son-sus-ventajas.jpg)
 ## **Introducción:**
 La idea principal de este proyecto es aprender a crear una aplicación con arquitectura orientada a **microservicios** en lugar de un monolito. Adicionalmente, toda la aplicación está **dockerizada** para facilitar su despliegue y administración.
 
 ### **Documentación implementada**
 Se ha implementado la **documentación a través de Swagger** para cada microservicio. Sin embargo, **no ha sido posible integrarla en el Gateway** debido a una incompatibilidad entre **Spring Gateway** y **Spring Web**. ¡Cualquier recomendación para implementar Swagger en el microservicio Gateway será bienvenida!
+
+## Arquitectura (Diagrama)
+
+![Diagrama](https://github.com/luishidalgoa/luishidalgoa/blob/main/Images/portfolio/Spring-microservices/diagrama.png?raw=true)
 
 ## **Documentación de la API:**
 
