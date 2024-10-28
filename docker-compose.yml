@@ -7,6 +7,12 @@ services:
       POSTGRES_PASSWORD: 1234
     ports:
       - "5432:5432"
+    healthcheck:
+      test: [ "CMD", "pg_isready", "-U", "root" ]
+      interval: 10s
+      timeout: 5s
+      retries: 3
+      start_period: 10s
     container_name: postgres-db
     networks:
       - microservices-network
@@ -19,13 +25,17 @@ services:
     container_name: mysql-db
     ports:
       - "3306:3306"
+    healthcheck:
+      test: [ "CMD", "mysqladmin", "ping", "-h", "localhost" ]
+      interval: 10s
+      timeout: 5s
+      retries: 3
+      start_period: 10s
     networks:
       - microservices-network
 
   eureka:
-    build:
-      context: ./microservice-eureka
-      dockerfile: Dockerfile
+    image: luishidalgoa/springbootmicroservicios-eureka:v2
     container_name: msvc-eureka
     environment:
       EUREKA_HOSTNAME: msvc-eureka
@@ -35,9 +45,7 @@ services:
       - microservices-network
 
   student:
-    build:
-      context: ./microservice-student
-      dockerfile: Dockerfile
+    image: luishidalgoa/springbootmicroservicios-student:v2
     container_name: msvc-student
     environment:
       MYSQL_HOST: mysql-db
@@ -47,15 +55,15 @@ services:
     ports:
       - "8090:8090"
     depends_on:
-      - mysql-db
-      - eureka
+      mysql-db:
+        condition: service_healthy
+      eureka:
+        condition: service_started
     networks:
       - microservices-network
 
   course:
-    build:
-      context: ./microservice-course
-      dockerfile: Dockerfile
+    image: luishidalgoa/springbootmicroservicios-course-service:v2
     container_name: msvc-course
     environment:
       POSTGRES_HOST: postgres-db
@@ -65,15 +73,15 @@ services:
     ports:
       - "9090:9090"
     depends_on:
-      - postgres-db
-      - eureka
+      postgres-db:
+        condition: service_healthy
+      eureka:
+        condition: service_started
     networks:
       - microservices-network
 
   gateway:
-    build:
-      context: ./microservice-gateway
-      dockerfile: Dockerfile
+    image: luishidalgoa/springbootmicroservicios-gateway:v2
     container_name: msvc-gateway
     environment:
       STUDENT_HOST: msvc-student
@@ -93,7 +101,7 @@ networks:
     driver: bridge
 
 
-#VARIABLES GLOBALES
+  #VARIABLES GLOBALES
   #MYSQL_HOST
   #MYSQL_USER
   #MYSQL_PASSWORD
