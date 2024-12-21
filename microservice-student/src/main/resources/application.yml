@@ -1,0 +1,5 @@
+spring:
+  application:
+    name: msvc-student
+  config:
+    import: optional:configserver:${CONFIG_SERVER_HOST:config-server}:8888
